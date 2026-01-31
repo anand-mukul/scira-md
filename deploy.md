@@ -6,7 +6,7 @@
     ```bash
     git add .
     git commit -m "Setup VitePress"
-    git push origin main
+    git push origin dev
     ```
 
 2.  **Enable GitHub Pages**:
@@ -23,7 +23,7 @@
 
     on:
       push:
-        branches: [main]
+        branches: [dev]
       workflow_dispatch:
 
     permissions:

@@ -8,14 +8,20 @@ S_UID(s): [Your IDs]
 
 ---
 
-## Slide 1: INTRODUCTION
-*   **Concept:** Fully automated, voice-first oral examination platform.
-*   **Core Tech:** Generative AI (LLMs) + Real-time Speech Processing.
-*   **Goal:** To verify "true understanding" beyond static written tests.
-*   **Key Shift:** Moving from "answering to a screen" to "conversing with an intelligent examiner."
-*   **Impact:** Solves the scalability trilemma of Quality, Speed, and Integrity.
+## Slide 1: THE PARADIGM SHIFT (INTRODUCTION)
 
----
+### The Vision
+> "Moving from static text-based testing to dynamic, voice-first verification."
+
+**SCIRA** is an autonomous AI Examiner designed to solve the **Assessment Trilemma**:
+
+| **Concept** | **The Implementation** |
+| :--- | :--- |
+| **🗣️ Conversational** | Replaces static forms with real-time, Socratic dialogue using **GPT-4o**. |
+| **🛡️ Integrity-First** | Verified identity & environment monitoring eliminates the "ChatGPT Loophole". |
+| **⚡ Infinite Scale** | Proctors 1 or 10,000 students simultaneously with zero fatigue. |
+
+**The Bottom Line:** We don't just check *what* the student wrote; we verify *if they understand it*.
 
 ## Slide 2: SOFTWARE / HARDWARE REQUIREMENTS
 
@@ -39,6 +45,23 @@ S_UID(s): [Your IDs]
 *   **Subjective Grading:** Grading varies drastically between different examiners (bias/fatigue).
 *   **The "ChatGPT" Loophole:** Students can generate code/essays using AI, making written assignments unreliable for verification.
 *   **Logistical Complexity:** Scheduling, venue management, and examiner availability create massive administrative overhead.
+
+### Visualizing the Bottleneck
+
+```mermaid
+graph LR
+    subgraph "Traditional Manual Viva"
+        A[500 Students] --"Bottleneck"--> B((1 Examiner))
+        B --"Fatigue & Subjectivity"--> C[Inconsistent Grades]
+        style B fill:#ff9999,stroke:#333,stroke-width:2px
+    end
+
+    subgraph "SCIRA AI Viva"
+        D[500 Students] --"Parallel Processing"--> E{{AI Agent Swarm}}
+        E --"Standardized Rubric"--> F[Fair & Instant Results]
+        style E fill:#99ff99,stroke:#333,stroke-width:2px
+    end
+```
 
 ---
 
