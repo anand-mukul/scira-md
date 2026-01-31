@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# OS misc
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Editors
+.vscode/
+.idea/
+*.swp
+
+# Deployment
+DEPLOYMENT.md
+
+# Build
+.vitepress/dist
+.vitepress/cache
