@@ -43,13 +43,27 @@ S_UID(s): [Your IDs]
 ---
 
 ## Slide 4: PRELIMINARY DESIGN
-*   **System Architecture:**
-    *   **Client Layer:** Interactive WebGL Interface & Audio Worklets.
-    *   **Transport Layer:** Secure WebSocket (WSS) for <500ms latency.
-    *   **Service Layer:**
-        *   **Orchestrator:** Manages conversation state & interruptions.
-        *   **RAG Engine:** Fetches context from uploaded Syllabus/PDFs.
-*   **Data Flow:** Audio → Deepgram (Text) → LLM (Reasoning) → TTS (Voice) → Student.
+*   **System Architecture (High Level):**
+
+```mermaid
+graph TD
+    User[Student / Instructor] -->|HTTPS / WSS| LoadBalancer[Nginx / Cloud Load Balancer]
+    LoadBalancer -->|API Requests| API[FastAPI Server Cluster]
+    LoadBalancer -->|WebSocket Audio| API
+    
+    subgraph "Core Backend"
+        API -->|Auth & User Data| DB[(PostgreSQL + pgvector)]
+        API -->|Session State FSM| Redis[(Redis Cache)]
+        API -->|Async Tasks| Celery[Celery Workers]
+        API -->|Media Upload| S3[AWS S3 Storage]
+    end
+    
+    subgraph "External AI Services"
+        API -->|Streaming Audio| Deepgram[Deepgram ASR]
+        API -->|Context & Logic| LLM[OpenAI GPT-4o]
+        API -->|Streaming Voice| TTS[ElevenLabs / OpenAI TTS]
+    end
+```
 
 ---
 
