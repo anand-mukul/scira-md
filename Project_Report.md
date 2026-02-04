@@ -1,12 +1,12 @@
 # PROJECT REPORT
 
-**TITLE:** SCIRA - Intelligent AI-Proctored Viva System
+**TITLE:** SCIRE - Intelligent AI-Proctored Viva System
 
 ---
 
 ## TITLE PAGE
 
-**Project Title:** SCIRA - Intelligent AI-Proctored Viva System
+**Project Title:** SCIRE - Intelligent AI-Proctored Viva System
 
 **Submitted by:** [Your Name/Team Members]
 
@@ -20,7 +20,7 @@
 
 ## BONAFIDE CERTIFICATE
 
-This is to certify that the project report entitled **"SCIRA - Intelligent AI-Proctored Viva System"** submitted by **[Student Name(s)]** in partial fulfillment of the requirements for the award of the degree of **[Degree Name]** is a bonafide record of the work done by them under my supervision and guidance.
+This is to certify that the project report entitled **"SCIRE - Intelligent AI-Proctored Viva System"** submitted by **[Student Name(s)]** in partial fulfillment of the requirements for the award of the degree of **[Degree Name]** is a bonafide record of the work done by them under my supervision and guidance.
 
 **Signature of Guide**
 [Name of Guide]
@@ -69,6 +69,16 @@ I would like to express my deep sense of gratitude to my guide, **[Guide Name]**
 | 2.4 | Summary & Gap Analysis | 10 |
 | 2.5 | Problem Definition | 11 |
 | 2.6 | Goals and Objectives | 12 |
+| **3** | **SYSTEM ANALYSIS & DESIGN** | **13** |
+| 3.1 | System Architecture | 13 |
+| 3.2 | Multi-Tenancy & Security | 14 |
+| 3.3 | Payment & Subscription Model | 15 |
+| 3.4 | AI & Voice Pipeline | 16 |
+| **4** | **IMPLEMENTATION** | **17** |
+| 4.1 | Technology Stack | 17 |
+| 4.2 | Backend Implementation | 18 |
+| 4.3 | Frontend & Real-time Audio | 19 |
+| 4.4 | Quota & Restriction Enforcement | 20 |
 
 ---
 
@@ -93,9 +103,9 @@ I would like to express my deep sense of gratitude to my guide, **[Guide Name]**
 
 ## ABSTRACT
 
-The traditional oral examination (viva voce) process is labor-intensive, difficult to scale, and prone to subjective bias. **Scira** is an intelligent, AI-proctored viva system designed to automate and standardize this process. By leveraging Large Language Models (LLMs), Voice Activity Detection (VAD), and real-time Speech-to-Text (STT) technologies, Scira conducts autonomous, conversational interviews with students.
+The traditional oral examination (viva voce) process is labor-intensive, difficult to scale, and prone to subjective bias. **Scire** is an intelligent, AI-proctored viva system designed to automate and standardize this process. By leveraging Large Language Models (LLMs), Voice Activity Detection (VAD), and real-time Speech-to-Text (STT) technologies, Scire conducts autonomous, conversational interviews with students.
 
-The system features real-time integrity monitoring (gaze tracking, noise detection), adaptive questioning based on uploaded syllabi (RAG), and automated grading against structured rubrics. This report details the design, implementation, and evaluation of Scira, demonstrating its efficacy in providing a fair, scalable, and secure oral assessment environment.
+The system features real-time integrity monitoring (gaze tracking, noise detection), adaptive questioning based on uploaded syllabi (RAG), and automated grading against structured rubrics. This report details the design, implementation, and evaluation of Scire, demonstrating its efficacy in providing a fair, scalable, and secure oral assessment environment.
 
 ---
 
@@ -103,7 +113,7 @@ The system features real-time integrity monitoring (gaze tracking, noise detecti
 
 ```mermaid
 graph LR
-    Student((Student)) <-->|Voice/Video| Frontend[Scira Web Interface]
+    Student((Student)) <-->|Voice/Video| Frontend[Scire Web Interface]
     Frontend <-->|WebSocket| Backend[FastAPI Server]
     Backend <-->|Audio Stream| ASR[Deepgram STT]
     Backend <-->|Context/History| LLM[GPT-4o Agent]
@@ -155,7 +165,7 @@ Educational assessments often rely on Multiple Choice Questions (MCQs) for scala
 2.  **Subjectivity:** Grading varies between examiners.
 3.  **Scheduling Conflicts:** Logistics of coordinating hundreds of students.
 
-Scira addresses the need for a **scalable, standardized, and deep assessment tool** that mimics a human examiner without the logistical overhead.
+Scire addresses the need for a **scalable, standardized, and deep assessment tool** that mimics a human examiner without the logistical overhead.
 
 ## 1.2 Relevant Contemporary Issues
 *   **Rise of AI Cheating:** With tools like ChatGPT, traditional essay/code assignments are easily compromised. Oral defense is becoming the gold standard for verifying authenticity.
@@ -223,7 +233,7 @@ The project involves building a full-stack web application with the following ke
 3.  **Automated Essay Scoring (AES):** Grades text but lacks the interactive/probing nature of a viva.
 
 ## 2.4 Summary Linking Literature Review with the Project
-Existing solutions are either **purely proctoring tools** (watching the student) or **static grading tools** (grading text). There is a gap for an **interactive examiner** that actively probes knowledge. Scira bridges this gap by combining state-of-the-art LLMs with real-time proctoring.
+Existing solutions are either **purely proctoring tools** (watching the student) or **static grading tools** (grading text). There is a gap for an **interactive examiner** that actively probes knowledge. Scire bridges this gap by combining state-of-the-art LLMs with real-time proctoring.
 
 ## 2.5 Problem Definition
 To design and develop a web-based platform that conducts automated, synchronous oral examinations using generative AI, ensuring low latency (<1s response), syllabus adherence, and exam integrity.
@@ -238,3 +248,111 @@ To design and develop a web-based platform that conducts automated, synchronous 
 2.  Achieve <500ms latency for Voice Activity Detection (VAD).
 3.  Develop a RAG pipeline to ground AI questions in uploaded course material.
 4.  Create a comprehensive dashboard for instructors to audit sessions and review grades.
+
+---
+
+# CHAPTER 3: SYSTEM ANALYSIS & DESIGN
+
+## 3.1 System Architecture
+
+Scira operates on a **modern, cloud-native, microservices-ready architecture**. While currently deployed as a modular monolith for ease of development, the system is designed with strict boundary contexts to ensure scalability.
+
+### 3.1.1 High-Level Components
+*   **Client Layer:** A Next.js (React) Single Page Application (SPA) handling UI and real-time audio processing.
+*   **API Gateway:** Nginx/Cloud Load Balancer routing HTTP and WebSocket traffic.
+*   **Core Backend:** FastAPI (Python) server handling business logic, orchestration, and session state.
+*   **Data Persistence:** PostgreSQL (with `pgvector`) for relational data and vector embeddings; Redis for high-speed session state caching.
+*   **Async Workers:** Celery workers backed by Redis for offloading heavy tasks like grading and email notifications.
+
+### 3.1.2 Data Flow
+The core user journey follows a bidirectional stream:
+1.  **Audio Ingestion:** Student audio is streamed via WebSocket to the backend.
+2.  **Processing:** Audio is buffered and sent to Deepgram for ASR (Speech-to-Text).
+3.  **Intelligence:** The transcript is analyzed by GPT-4o, which accesses the session context and syllabus (RAG).
+4.  **Response:** The AI response is synthesized into speech and streamed back to the client.
+
+## 3.2 Multi-Tenancy & Security
+
+Scira is built from the ground up as a **multi-tenant SaaS platform**, allowing multiple educational institutions (tenants) to use the system in isolation.
+
+### 3.2.1 Isolation Strategy
+*   **Database:** Shared database with `tenant_id` discriminator in every table. row-Level Security (RLS) enforcement ensures strict data segregation.
+*   **Context Management:** A thread-safe `ContextVar` middleware intercepts every request to set the active tenant scope, preventing data leakage.
+*   **Authentication:** JWTs contain custom claims (`tenant_slug`, `role`) to scope user access.
+
+### 3.2.2 Proctoring & Integrity
+*   **Identity Verification:** One-time face snapshot at session start matched against user profile.
+*   **Browser Monitoring:** Continuous tracking of tab switches and focus loss events (integrity heartbeats).
+*   **Environment Analysis:** Audio background noise levels monitored for integrity flags.
+
+## 3.3 Payment & Subscription Model
+
+To ensure sustainability and fair usage, Scira implements a robust subscription management system efficiently handled via **Razorpay**.
+
+### 3.3.1 Subscription Tiers
+*   **Free Tier:** Limited to 50 students and 5 exams/month. Ideal for pilots.
+*   **Pro Tier (₹4,999/mo):** 1,000 students and 100 exams/month. For departments.
+*   **Enterprise:** Custom limits for large-scale university deployment.
+
+### 3.3.2 Implementation & Security
+*   **Server-Side Pricing:** All pricing logic is decoupled from the frontend to prevent client-side manipulation.
+*   **Quota Enforcement:** Strict API-level interceptors block resource creation (Exams/Users) when limits are exceeded, triggering an automatic `402 Payment Required` response.
+*   **HMAC Verification:** All payment webhooks and callbacks are cryptographically verified using SHA-256 signatures to prevent spoofing.
+
+## 3.4 AI & Voice Pipeline
+
+The heart of Scira is its "Voice Loop," designed for human-like conversational latency (<1s).
+
+1.  **Voice Activity Detection (VAD):** Client-side Silero VAD filters silence to save bandwidth.
+2.  **Audio Compression:** RFC-compliant buffering with optional compression to reduce transmission overhead.
+3.  **State Management:** A dedicated Finite State Machine (FSM) manages conversation states (Listening -> Thinking -> Speaking) to prevent interruptions and handle turn-taking naturally.
+
+---
+
+# CHAPTER 4: IMPLEMENTATION
+
+## 4.1 Technology Stack
+
+### Backend
+*   **Framework:** FastAPI (Python 3.11) - chosen for native async support and high performance.
+*   **Database:** PostgreSQL 15 + `pgvector` extension for vector similarity search.
+*   **Queueing:** Redis + Celery for distributed task processing.
+*   **ORM:** SQLAlchemy (Async) for robust database interactions.
+
+### Frontend
+*   **Framework:** Next.js 14 (App Router) for server-side rendering and routing.
+*   **Styling:** Tailwind CSS + Shadcn UI for a premium, accessible design system.
+*   **State:** TanStack Query for server state management; Zustand for client-side audio state.
+
+### External Services
+*   **Deepgram:** Nova-2 model for state-of-the-art speech-to-text.
+*   **OpenAI:** GPT-4o for reasoning and `text-embedding-ada-002` for RAG.
+*   **ElevenLabs:** Context-aware neural text-to-speech.
+*   **Razorpay:** Secure payment processing.
+
+## 4.2 Backend Implementation
+
+### 4.2.1 Service Layer Pattern
+The backend adheres to a strict layered architecture:
+*   **Router Layer:** Handles HTTP request/response and Pydantic validation.
+*   **Service Layer:** Contains business logic and atomic operations.
+*   **Data Layer:** Direct database interactions via SQLAlchemy models.
+
+### 4.2.2 Asynchronous Grading Pipeline
+Grading is decoupled to ensure the live exam is never blocked.
+1.  Session completes -> `grade_session_task` pushed to Celery.
+2.  Worker retrieves rubric and transcript.
+3.  LLM evaluates responses against each criterion.
+4.  Results stored and email triggered via Resend API (asynchronously).
+
+## 4.3 Frontend & Real-time Audio
+The frontend implements a custom `AudioStreamHook` that manages the `AudioContext`. It handles:
+*   Standardizing sample rates (16kHz or 48kHz).
+*   Handling browser permissions (navigator.mediaDevices).
+*   Visualizing audio waves using Canvas API for user feedback.
+
+## 4.4 Quota & Restriction Enforcement
+A novel "Interceptor Pattern" was implemented for quotas:
+*   **Request Interception:** Before any `POST /exam` or user creation, a dependency `require_quota("resource")` is injected.
+*   **Atomic Check:** The logic queries the current usage count against the tenant's limits in a READ-COMMITTED transaction.
+*   **User Feedback:** If rejected, the UI displays a clear, actionable toast message prompting an upgrade.

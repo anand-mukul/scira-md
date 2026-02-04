@@ -20,12 +20,41 @@ export default defineConfig({
     // Sidebar
     sidebar: [
       {
-        text: 'Documentation',
+        text: 'Project Overview',
+        collapsed: false,
         items: [
           { text: 'Project Report', link: '/Project_Report' },
-          { text: 'Presentation Content', link: '/PPT_Content' },
           { text: 'Presentation Slides', link: '/Presentation' },
+          { text: 'Presentation Content', link: '/PPT_Content' },
           { text: 'Q&A', link: '/Question_answers' }
+        ]
+      },
+      {
+        text: 'System Architecture',
+        collapsed: false,
+        items: [
+          { text: 'System Design', link: '/SYSTEM_DESIGN' },
+          { text: 'Database Models', link: '/DATABASE_MODELS' },
+          { text: 'Payment System', link: '/PAYMENT_SYSTEM' },
+          { text: 'Quota Enforcement', link: '/QUOTA_ENFORCEMENT' },
+          { text: 'SSO Setup', link: '/SSO_SETUP_GUIDE' }
+        ]
+      },
+      {
+        text: 'Frontend Docs',
+        collapsed: false,
+        items: [
+          { text: 'Architecture', link: '/FRONTEND_ARCHITECTURE' },
+          { text: 'Workflow', link: '/FRONTEND_WORKFLOW' }
+        ]
+      },
+      {
+        text: 'Deployment & Ops',
+        collapsed: false,
+        items: [
+          { text: 'Deployment Guide', link: '/deploy' },
+          { text: 'Railway & Celery', link: '/RAILWAY_CELERY_DEPLOYMENT' },
+          { text: 'Monitoring (Site24x7)', link: '/site24x7_guide' }
         ]
       }
     ],
