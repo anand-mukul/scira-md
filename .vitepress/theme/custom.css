@@ -1,0 +1,116 @@
+/* Custom styles for Scira documentation */
+
+/* Mermaid diagram clickable indicator */
+.mermaid-diagram svg.zoom-enabled,
+.mermaid svg.zoom-enabled {
+  cursor: zoom-in;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+}
+
+.mermaid-diagram svg.zoom-enabled:hover,
+.mermaid svg.zoom-enabled:hover {
+  box-shadow: 0 4px 20px rgba(52, 81, 178, 0.3);
+  transform: scale(1.01);
+}
+
+/* Add a subtle zoom hint */
+.mermaid-diagram,
+.mermaid {
+  position: relative;
+}
+
+.mermaid-diagram::after,
+.mermaid::after {
+  content: "Click to zoom";
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: var(--vp-c-brand-1, #3451b2);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.mermaid-diagram:hover::after,
+.mermaid:hover::after {
+  opacity: 1;
+}
+
+/* Better mermaid diagram styling */
+.mermaid-diagram svg,
+.mermaid svg {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1rem auto;
+}
+
+/* Dark mode support for mermaid zoom modal */
+.dark .mermaid-zoom-controls {
+  background: var(--vp-c-bg-soft, #202127);
+}
+
+.dark .mermaid-zoom-controls button {
+  background: var(--vp-c-bg, #1b1b1f);
+  color: var(--vp-c-text-1, rgba(255, 255, 245, 0.86));
+}
+
+.dark .mermaid-zoom-controls button:hover {
+  background: var(--vp-c-brand-1, #a8b1ff);
+  color: #1b1b1f;
+}
+
+.dark .zoom-level {
+  color: var(--vp-c-text-1, rgba(255, 255, 245, 0.86));
+}
+
+.dark .mermaid-zoom-content {
+  background: #1b1b1f;
+}
+
+.dark .mermaid-zoom-hint {
+  background: rgba(27, 27, 31, 0.9);
+  color: rgba(255, 255, 245, 0.86);
+}
+
+/* Improve overall documentation typography */
+.vp-doc h1 {
+  font-size: 2rem;
+  border-bottom: 2px solid var(--vp-c-brand-1);
+  padding-bottom: 0.5rem;
+}
+
+/* Code block enhancements */
+.vp-doc div[class*='language-'] {
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+/* Table styling improvements */
+.vp-doc table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+
+.vp-doc th,
+.vp-doc td {
+  border: 1px solid var(--vp-c-divider);
+  padding: 10px 14px;
+}
+
+.vp-doc th {
+  background: var(--vp-c-bg-soft);
+  font-weight: 600;
+}
+
+/* Sidebar improvements */
+.VPSidebar {
+  scrollbar-width: thin;
+}

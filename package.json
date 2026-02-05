@@ -21,7 +21,9 @@
   },
   "homepage": "https://github.com/anand-mukul/scira-md#readme",
   "devDependencies": {
+    "mermaid": "^11.12.2",
     "vitepress": "^1.6.4",
+    "vitepress-plugin-mermaid": "^2.0.17",
     "vue": "^3.5.27"
   }
 }

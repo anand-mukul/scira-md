@@ -2,24 +2,36 @@
 layout: home
 
 hero:
-  name: AI Viva System
-  text: Documentation Hub
-  tagline: Technical reports, presentation materials, and architecture overview.
+  name: Scira
+  text: AI Viva Platform Documentation
+  tagline: Multi-tenant AI viva system with real-time voice interactions, automated grading, and comprehensive exam management.
   actions:
     - theme: brand
       text: View Project Report
       link: /Project_Report
     - theme: alt
-      text: Presentation Decks
+      text: System Architecture
+      link: /SYSTEM_DESIGN
+    - theme: alt
+      text: Presentation
       link: /Presentation
 
 features:
-  - title: Technical Report
-    details: In-depth analysis of the system architecture, methodology, and implementation details.
-    link: /Project_Report
-  - title: Presentation Assets
-    details: Access the official viva presentation slides and script content.
-    link: /Presentation
+  - title: System Architecture
+    details: Explore the multi-tenant architecture, database models, and API design with interactive diagrams.
+    link: /SYSTEM_DESIGN
+  - title: Exam Flow
+    details: Understand the complete exam lifecycle from scheduling to grading with detailed sequence diagrams.
+    link: /EXAM_FLOW
+  - title: Frontend Integration
+    details: Next.js frontend architecture, state management, and real-time communication patterns.
+    link: /FRONTEND_ARCHITECTURE
+  - title: Deployment Guide
+    details: Production deployment on Railway with Celery workers, Redis, and PostgreSQL.
+    link: /deploy
+  - title: Payment System
+    details: Razorpay integration with server-side pricing and subscription management.
+    link: /PAYMENT_SYSTEM
   - title: Q&A Knowledge Base
     details: Comprehensive list of anticipated questions and technical answers.
     link: /Question_answers
