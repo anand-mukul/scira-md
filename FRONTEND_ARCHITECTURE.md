@@ -1,4 +1,4 @@
-# Scira — Frontend Architecture & Integration Guide
+# Scire — Frontend Architecture & Integration Guide
 
 **Version:** 3.0  
 **Last Updated:** February 1, 2026  
@@ -20,7 +20,7 @@
 
 ## 1. Architecture Overview
 
-**Scira Frontend** is a Next.js (App Router) application that serves as the interface for distinct user personas within a **multi-tenant** context: **Students**, **Instructors**, **Admins**, **Reviewers**, and **Platform Admins**. It relies heavily on **Server-Side Rendering (SSR)** for dashboards and **Client-Side Rendering (CSR)** for the real-time exam room.
+**Scire Frontend** is a Next.js (App Router) application that serves as the interface for distinct user personas within a **multi-tenant** context: **Students**, **Instructors**, **Admins**, **Reviewers**, and **Platform Admins**. It relies heavily on **Server-Side Rendering (SSR)** for dashboards and **Client-Side Rendering (CSR)** for the real-time exam room.
 
 ### Tech Stack
 *   **Framework:** Next.js (App Router)
@@ -245,7 +245,7 @@ Every 10 seconds, send:
 *Copy and paste the block below into v0.dev to generate the core frontend structure.*
 
 ```markdown
-You are an expert Frontend Architect building "Scira," an advanced AI-Proctored Oral Exam Platform with Multi-Tenant support.
+You are an expert Frontend Architect building "Scire," an advanced AI-Proctored Oral Exam Platform with Multi-Tenant support.
 Your goal is to scaffold the application using Next.js 14 (App Router), Tailwind CSS, Lucide Icons, and Shadcn/UI.
 
 ### 🏢 Multi-Tenancy

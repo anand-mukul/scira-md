@@ -5,7 +5,7 @@
 
 ## Overview
 
-Scira implements a secure, server-side pricing model for subscription management using Razorpay as the payment gateway. This document describes the complete payment flow, quota enforcement, and security measures.
+Scire implements a secure, server-side pricing model for subscription management using Razorpay as the payment gateway. This document describes the complete payment flow, quota enforcement, and security measures.
 
 ---
 

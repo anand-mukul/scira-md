@@ -255,7 +255,7 @@ To design and develop a web-based platform that conducts automated, synchronous 
 
 ## 3.1 System Architecture
 
-Scira operates on a **modern, cloud-native, microservices-ready architecture**. While currently deployed as a modular monolith for ease of development, the system is designed with strict boundary contexts to ensure scalability.
+Scire operates on a **modern, cloud-native, microservices-ready architecture**. While currently deployed as a modular monolith for ease of development, the system is designed with strict boundary contexts to ensure scalability.
 
 ### 3.1.1 High-Level Components
 *   **Client Layer:** A Next.js (React) Single Page Application (SPA) handling UI and real-time audio processing.
@@ -273,7 +273,7 @@ The core user journey follows a bidirectional stream:
 
 ## 3.2 Multi-Tenancy & Security
 
-Scira is built from the ground up as a **multi-tenant SaaS platform**, allowing multiple educational institutions (tenants) to use the system in isolation.
+Scire is built from the ground up as a **multi-tenant SaaS platform**, allowing multiple educational institutions (tenants) to use the system in isolation.
 
 ### 3.2.1 Isolation Strategy
 *   **Database:** Shared database with `tenant_id` discriminator in every table. row-Level Security (RLS) enforcement ensures strict data segregation.
@@ -287,7 +287,7 @@ Scira is built from the ground up as a **multi-tenant SaaS platform**, allowing 
 
 ## 3.3 Payment & Subscription Model
 
-To ensure sustainability and fair usage, Scira implements a robust subscription management system efficiently handled via **Razorpay**.
+To ensure sustainability and fair usage, Scire implements a robust subscription management system efficiently handled via **Razorpay**.
 
 ### 3.3.1 Subscription Tiers
 *   **Free Tier:** Limited to 50 students and 5 exams/month. Ideal for pilots.
@@ -301,7 +301,7 @@ To ensure sustainability and fair usage, Scira implements a robust subscription 
 
 ## 3.4 AI & Voice Pipeline
 
-The heart of Scira is its "Voice Loop," designed for human-like conversational latency (<1s).
+The heart of Scire is its "Voice Loop," designed for human-like conversational latency (<1s).
 
 1.  **Voice Activity Detection (VAD):** Client-side Silero VAD filters silence to save bandwidth.
 2.  **Audio Compression:** RFC-compliant buffering with optional compression to reduce transmission overhead.

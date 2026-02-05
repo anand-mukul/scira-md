@@ -1,4 +1,4 @@
-# Scira - Exam Flow Documentation
+# Scire - Exam Flow Documentation
 
 **Version:** 3.0  
 **Last Updated:** February 1, 2026
@@ -7,7 +7,7 @@
 
 ## 1. Overview
 
-This document describes the complete end-to-end user flow for taking an AI-proctored viva examination in the **multi-tenant** Scira system. All operations are scoped to the user's `tenant_id`, ensuring complete isolation between organizations.
+This document describes the complete end-to-end user flow for taking an AI-proctored viva examination in the **multi-tenant** Scire system. All operations are scoped to the user's `tenant_id`, ensuring complete isolation between organizations.
 
 ---
 

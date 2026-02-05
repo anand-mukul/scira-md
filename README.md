@@ -1,9 +1,9 @@
-# Scira Backend Documentation
+# Scire Backend Documentation
 
 **Last Updated**: February 3, 2026  
 **Version**: 3.1
 
-Welcome to the Scira backend documentation. This directory contains comprehensive guides on the system architecture, implementation details, and operational procedures.
+Welcome to the Scire backend documentation. This directory contains comprehensive guides on the system architecture, implementation details, and operational procedures.
 
 ---
 
@@ -31,7 +31,7 @@ Welcome to the Scira backend documentation. This directory contains comprehensiv
 
 ## 🏗️ System Overview
 
-Scira is a **Multi-Tenant AI Viva Platform** that enables organizations to conduct automated oral examinations using voice AI.
+Scire is a **Multi-Tenant AI Viva Platform** that enables organizations to conduct automated oral examinations using voice AI.
 
 ### Key Features
 - 🏢 **Multi-Tenancy**: Full isolation with shared database and Row-Level Security

@@ -1,4 +1,4 @@
-# Scira - System Design Document
+# Scire - System Design Document
 
 **Version:** 3.1  
 **Last Updated:** February 3, 2026  
@@ -8,7 +8,7 @@
 
 ## 1. 🏗️ High-Level Architecture
 
-Scira follows a **Multi-Tenant, Event-Driven, Service-Oriented Architecture** built on a monolithic FastAPI core. It leverages asynchronous processing for real-time interactions (Voice/AI) and background workers for heavy lifting (Grading, Notifications).
+Scire follows a **Multi-Tenant, Event-Driven, Service-Oriented Architecture** built on a monolithic FastAPI core. It leverages asynchronous processing for real-time interactions (Voice/AI) and background workers for heavy lifting (Grading, Notifications).
 
 ```mermaid
 graph TD

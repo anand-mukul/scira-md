@@ -5,7 +5,7 @@
 
 ## Overview
 
-Scira enforces subscription-based quotas to ensure fair usage and encourage upgrades. Quotas are checked **before** resource creation and enforced at the **API layer** to prevent abuse.
+Scire enforces subscription-based quotas to ensure fair usage and encourage upgrades. Quotas are checked **before** resource creation and enforced at the **API layer** to prevent abuse.
 
 ---
 

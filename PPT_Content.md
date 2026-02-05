@@ -1,7 +1,7 @@
 # PPT Content - AI Viva System
 
 ## Slide 0: PROJECT TITLE
-**SCIRA - Intelligent AI-Proctored Viva System**
+**SCIRE - Intelligent AI-Proctored Viva System**
 *(Dept_Id)*
 Student Name(s): [Your Names]
 S_UID(s): [Your IDs]
@@ -13,7 +13,7 @@ S_UID(s): [Your IDs]
 ### The Vision
 > "Moving from static text-based testing to dynamic, voice-first verification."
 
-**SCIRA** is an autonomous AI Examiner designed to solve the **Assessment Trilemma**:
+**SCIRE** is an autonomous AI Examiner designed to solve the **Assessment Trilemma**:
 
 | **Concept** | **The Implementation** |
 | :--- | :--- |
@@ -56,7 +56,7 @@ graph LR
         style B fill:#ff9999,stroke:#333,stroke-width:2px
     end
 
-    subgraph "SCIRA AI Viva"
+    subgraph "SCIRE AI Viva"
         D[500 Students] --"Parallel Processing"--> E{{AI Agent Swarm}}
         E --"Standardized Rubric"--> F[Fair & Instant Results]
         style E fill:#99ff99,stroke:#333,stroke-width:2px
@@ -125,6 +125,6 @@ graph TD
 ---
 
 ## Slide 10: THANK YOU
-*   **Conclusion:** Scira bridges the gap between scalable testing and authentic evaluation.
+*   **Conclusion:** Scire bridges the gap between scalable testing and authentic evaluation.
 *   **Contact:** [Your Email/Contact Info]
 *   **Q&A Session**
