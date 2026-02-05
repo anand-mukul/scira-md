@@ -202,7 +202,97 @@ LIMIT 5;
 
 ---
 
-## 6. Phase 5: Session Completion & Grading
+## 6. FSM State Timeouts & Auto-Progression
+
+### 6.1 Overview
+The Dialogue State Machine (FSM) implements deterministic timeout controls to ensure exam sessions progress even when students are unresponsive or technical issues occur. This prevents sessions from indefinitely stalling and ensures fair time management.
+
+### 6.2 Timeout Specifications
+
+| State | Timeout Duration | Trigger Condition | Auto-Transition Behavior |
+|-------|-----------------|-------------------|-------------------------|
+| **CALIBRATION** | **45 seconds** | No voice input detected | → QUESTION (Generate first question) |
+| **QUESTION** | **90 seconds** | No response started | → EVALUATION → TRANSFER → QUESTION |
+| **LISTENING** | **90 seconds** | Silence during answer | → EVALUATION (Mark as "No Response") |
+
+### 6.3 Implementation Details
+
+#### Calibration Timeout (45s)
+```python
+# backend/app/services/dialogue/state_agent.py
+CALIBRATION_LIMIT = 45  # seconds
+
+if current_state == DialogueState.CALIBRATION:
+    if elapsed > CALIBRATION_LIMIT:
+        # Force transition: CALIBRATION → QUESTION
+        response_text = "I didn't hear you, but let's begin. " + first_question
+        fsm.transition_to(DialogueState.QUESTION, force=True)
+```
+
+**Purpose**: Prevents students from being stuck in calibration phase indefinitely if:
+- Microphone permissions denied
+- Hardware malfunction
+- Network latency preventing voice detection
+
+**UX**: Frontend displays 45-second countdown (`CountDown45` component) synchronized with backend timeout.
+
+#### Question Timeout (90s)
+```python
+# backend/app/services/dialogue/state_agent.py
+QUESTION_LIMIT = 90  # seconds
+
+if current_state in [DialogueState.QUESTION, DialogueState.LISTENING]:
+    if elapsed > QUESTION_LIMIT:
+        # Mark as no response and proceed to next question
+        evaluation = {"is_satisfactory": False, "reason": "No response (Timeout)"}
+        fsm.transition_to(DialogueState.TRANSFER, force=True)
+        response_text = "Let's move on to the next question. " + next_question
+```
+
+**Purpose**: Ensures exam progresses even if student:
+- Doesn't respond within reasonable time
+- Connection drops during answer
+- Experiences audio output issues
+
+### 6.4 Timeout Monitoring & Heartbeat
+
+**Heartbeat Interval**: 10 seconds  
+**Monitoring Location**: `backend/app/api/v1/websocket.py` (WebSocket heartbeat loop)
+
+```python
+# Executed every 10 seconds
+timeout_response = await state_agent.handle_timeout()
+if timeout_response:
+    # Broadcast state update to frontend
+    # Generate and speak timeout message
+    # Persist transition to Redis
+```
+
+**Activity Timestamp Tracking**:
+- `last_activity_at`: Updated **only** on student speech input (NOT on state transitions)
+- Elapsed time calculated: `(current_time - last_activity_at).total_seconds()`
+
+### 6.5 Frontend Synchronization
+
+| Component | Timer Display | Purpose |
+|-----------|--------------|----------|
+| `CalibrationPhase.tsx` | 45s countdown | Visual feedback during mic check |
+| `VivaOrchestrator.tsx` | Question timer (60s display) | Per-question time pressure indicator |
+
+**Note**: Frontend timers are for UX feedback only. **Backend timeouts are authoritative** for state transitions.
+
+### 6.6 Edge Case Handling
+
+| Scenario | Behavior |
+|----------|----------|
+| Student speaks at 44s in calibration | Timer resets; calibration continues |
+| WebSocket reconnect during timeout | Activity timestamp preserved in Redis |
+| Multiple rapid timeouts | Each creates audit log entry; exam continues |
+| Manual session end during timeout | Timeout handling aborted; normal end flow |
+
+---
+
+## 7. Phase 5: Session Completion & Grading
 
 ```mermaid
 sequenceDiagram
@@ -233,7 +323,7 @@ sequenceDiagram
 
 ---
 
-## 7. Phase 6: Result Notification & Viewing
+## 8. Phase 6: Result Notification & Viewing
 
 ```mermaid
 sequenceDiagram
@@ -258,7 +348,7 @@ sequenceDiagram
 
 ---
 
-## 8. Session Status State Machine
+## 9. Session Status State Machine
 
 ```mermaid
 stateDiagram-v2
@@ -278,7 +368,7 @@ stateDiagram-v2
 
 ---
 
-## 9. Review Status Flow
+## 10. Review Status Flow
 
 ```mermaid
 stateDiagram-v2
@@ -302,7 +392,7 @@ Once a session reaches `APPROVED` or `REJECTED` status:
 
 ---
 
-## 10. Multi-Tenant Summary
+## 11. Multi-Tenant Summary
 
 | Aspect | Implementation |
 |--------|----------------|
